@@ -80,7 +80,39 @@ function custom_head_tags_content_callback() {
 
 // Función para sanear el contenido de las etiquetas
 function custom_head_tags_sanitize_content($content) {
-    return wp_kses_post($content);
+    $allowed_tags = array(
+        'script' => array(
+            'src' => array(),
+            'type' => array(),
+            'async' => array(),
+            'defer' => array(),
+            'crossorigin' => array(),
+        ),
+        'style' => array(
+            'type' => array(),
+            'media' => array(),
+        ),
+        'link' => array(
+            'href' => array(),
+            'rel' => array(),
+            'type' => array(),
+            'sizes' => array(),
+            'media' => array(),
+            'crossorigin' => array(),
+        ),
+        'meta' => array(
+            'name' => array(),
+            'content' => array(),
+            'charset' => array(),
+            'http-equiv' => array(),
+        ),
+        'base' => array(
+            'href' => array(),
+            'target' => array(),
+        ),
+    );
+
+    return wp_kses($content, $allowed_tags);
 }
 
 function custom_head_tags() {
